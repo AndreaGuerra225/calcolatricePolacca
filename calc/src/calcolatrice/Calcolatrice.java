@@ -3,6 +3,7 @@ package calcolatrice;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Stack;
 
 public class Calcolatrice {
@@ -26,6 +27,8 @@ public class Calcolatrice {
     private JLabel label;
     private JButton canc;
     private JRadioButton RPNRadioButton;
+
+    private boolean RPN = false;
 
     private String[] array;
     private int i = 0;
@@ -159,7 +162,7 @@ public class Calcolatrice {
         RPNRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                RPN = !RPN;
             }
         });
     }
@@ -172,6 +175,24 @@ public class Calcolatrice {
         }
        return operazione;
     }
+
+    public void scriviRPN(String RPNInput){
+        char arrayOperazioni[] = new char[RPNInput.length()];
+        int x = 0;
+        String RPNOutput = "";
+        for (int i = 0; i < RPNInput.length(); i++){
+            if (!Operazione(RPNInput, i) ){
+                RPNOutput+=RPNInput.charAt(i);
+            }
+            else{
+                arrayOperazioni[x] = RPNInput.charAt(i);
+            }
+        }
+        for (int i = 0; i < arrayOperazioni.length; i++){
+            RPNOutput += arrayOperazioni[i];
+        }
+    }
+
     public float CalcolaRPN(String RPNInput){
         //stack int
         Float op[] = new Float[2];
