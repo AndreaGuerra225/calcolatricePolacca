@@ -3,7 +3,9 @@ package calcolatrice;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Calcolatrice {
@@ -177,7 +179,7 @@ public class Calcolatrice {
     }
 
     public void scriviRPN(String RPNInput){
-        char arrayOperazioni[] = new char[RPNInput.length()];
+        Queue<Character> codaOp = new LinkedList<>();
         int x = 0;
         String RPNOutput = "";
         for (int i = 0; i < RPNInput.length(); i++){
@@ -185,11 +187,18 @@ public class Calcolatrice {
                 RPNOutput+=RPNInput.charAt(i);
             }
             else{
-                arrayOperazioni[x] = RPNInput.charAt(i);
+                if(RPNInput.charAt(i) == '*'|| RPNInput.charAt(i) == '/' ){
+                    codaOp.add(RPNInput.charAt(i));
+                    for (int z = 0; z < codaOp.size(); z++){
+                        codaOp.add(codaOp.remove());
+                    }
+                }
+                else
+                    codaOp.add(RPNInput.charAt(i));
             }
         }
-        for (int i = 0; i < arrayOperazioni.length; i++){
-            RPNOutput += arrayOperazioni[i];
+        for (int i = 0; i < codaOp.size(); i++){
+            RPNOutput += codaOp.remove();
         }
     }
 
