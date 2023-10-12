@@ -3,6 +3,7 @@ package calcolatrice;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Stack;
 
 public class Calcolatrice {
     private JButton b1;
@@ -24,6 +25,7 @@ public class Calcolatrice {
     private JPanel panel;
     private JLabel label;
     private JButton canc;
+    private JRadioButton RPNRadioButton;
 
     private String[] array;
     private int i = 0;
@@ -145,43 +147,7 @@ public class Calcolatrice {
         sorpresa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(panel, "I don't want to set the world on fire\n" +
-                        "I just want to start\n" +
-                        "A flame in your heart\n" +
-                        "In my heart, I have but one desire\n" +
-                        "And that one is you\n" +
-                        "No other will do\n" +
-                        "I've lost all ambition\n" +
-                        "For worldly acclaim\n" +
-                        "I just want to be the one you love\n" +
-                        "And with your admission\n" +
-                        "That you feel the same\n" +
-                        "I'll have reached the goal I'm dreaming of\n" +
-                        "Believe me\n" +
-                        "I don't want to set the world on fire\n" +
-                        "I just want to start\n" +
-                        "A flame in your heart\n" +
-                        "I don't want to set the world on fire, honey\n" +
-                        "I love you too much\n" +
-                        "I just want to start\n" +
-                        "A great big flame\n" +
-                        "Down in your heart\n" +
-                        "You see\n" +
-                        "Way down inside of me\n" +
-                        "Darlin', I have only one desire\n" +
-                        "And that one desire is you\n" +
-                        "And I know\n" +
-                        "Nobody else ain't gonna do\n" +
-                        "I've lost all ambition\n" +
-                        "For worldly acclaim\n" +
-                        "I just want to be the one you love\n" +
-                        "And with your admission\n" +
-                        "That you feel the same\n" +
-                        "I'll have reached the goal I'm dreaming of\n" +
-                        "Believe me\n" +
-                        "I don't want to set the world on fire\n" +
-                        "I just want to start\n" +
-                        "A flame in your heart");
+                JOptionPane.showMessageDialog(panel, "BECCATISTOTRAPEZIOPERFAVOREHHH");
             }
         });
         canc.addActionListener(new ActionListener() {
@@ -190,8 +156,45 @@ public class Calcolatrice {
                 label.setText(label.getText().substring(0, label.getText().length() -1));
             }
         });
-    }
+        RPNRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+    }
+    String RPNInput = "2395-*+3-";
+
+    public boolean Operazione(String RPNInput, int i){
+        boolean operazione = false;
+        if(RPNInput.charAt(i) == '+' || RPNInput.charAt(i) == '-' || RPNInput.charAt(i) == '*' || RPNInput.charAt(i) == '/'){
+            operazione = true;
+        }
+       return operazione;
+    }
+    public float CalcolaRPN(String RPNInput){
+        //stack int
+        Float op[] = new Float[2];
+        float newPush=0;
+        Stack<Float> stack = new Stack<Float>();
+        for(int i = 0; i < RPNInput.length(); i++){
+            if(!Operazione(RPNInput, i) ){
+                stack.push((float) RPNInput.charAt(i));
+            }
+            else {
+                op[1] = stack.pop();
+                op[0] = stack.pop();
+                switch (RPNInput.charAt(i)){
+                    case '+': newPush = op[0]+op[1];
+                    case '-': newPush = op[0]-op[1];
+                    case '*': newPush = op[0]*op[1];
+                    case '/': newPush = op[0]/op[1];
+                }
+                stack.push(newPush);
+            }
+        }
+        return stack.pop();
+    }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Calcolatrice");
