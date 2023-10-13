@@ -188,6 +188,8 @@ public class Calcolatrice {
        return operazione;
     }
 
+    
+
     public void scriviRPN(String RPNInput){
         Queue<Character> codaOp = new LinkedList<>();
         int x = 0;
@@ -217,19 +219,31 @@ public class Calcolatrice {
         //stack int
         Float op[] = new Float[2];
         float newPush=0;
+        float f;
         Stack<Float> stack = new Stack<Float>();
         for(int i = 0; i < RPNInput.length(); i++){
             if(!Operazione(RPNInput, i) ){
-                stack.push((float) RPNInput.charAt(i));
+
+                stack.push(Float.parseFloat(RPNInput.charAt(i)+""));
             }
             else {
                 op[1] = stack.pop();
                 op[0] = stack.pop();
                 switch (RPNInput.charAt(i)){
-                    case '+': newPush = op[0]+op[1];
-                    case '-': newPush = op[0]-op[1];
-                    case '*': newPush = op[0]*op[1];
-                    case '/': newPush = op[0]/op[1];
+                    case '+': {newPush = op[0]+op[1];
+                    break;}
+                    case '-': {
+                        newPush = op[0] - op[1];
+                        break;
+                    }
+                    case '*': {
+                        newPush = op[0] * op[1];
+                        break;
+                    }
+                    case '/': {
+                        newPush = op[0] / op[1];
+                        break;
+                    }
                 }
                 stack.push(newPush);
             }
