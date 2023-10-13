@@ -32,7 +32,7 @@ public class Calcolatrice {
 
     private boolean RPN = false;
 
-    private String[] array;
+    private String input = "";
     private int i = 0;
 
 
@@ -41,7 +41,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("1"));
-                array[i] = "1";
+                input += "1";
                 i++;
             }
         });
@@ -49,7 +49,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("2"));
-                array[i] = "2";
+                input += "2";
                 i++;
             }
         });
@@ -57,7 +57,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("3"));
-                array[i] = "3";
+                input += "3";
                 i++;
             }
         });
@@ -65,7 +65,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("4"));
-                array[i] = "4";
+                input += "4";
                 i++;
             }
         });
@@ -73,7 +73,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("5"));
-                array[i] = "5";
+                input += "5";
                 i++;
             }
         });
@@ -81,7 +81,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("6"));
-                array[i] = "6";
+                input += "6";
                 i++;
             }
         });
@@ -89,7 +89,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("7"));
-                array[i] = "7";
+                input += "7";
                 i++;
             }
         });
@@ -97,7 +97,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("8"));
-                array[i] = "8";
+                input += "8";
                 i++;
             }
         });
@@ -105,7 +105,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("9"));
-                array[i] = "9";
+                input += "9";
                 i++;
             }
         });
@@ -113,7 +113,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("0"));
-                array[i] = "0";
+                input += "0";
                 i++;
             }
         });
@@ -121,7 +121,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("+"));
-                array[i] = "+";
+                input += "+";
                 i++;
             }
         });
@@ -129,7 +129,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("-"));
-                array[i] = "-";
+                input += "-";
                 i++;
             }
         });
@@ -137,7 +137,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("*"));
-                array[i] = "*";
+                input += "*";
                 i++;
             }
         });
@@ -145,7 +145,7 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 label.setText(label.getText().concat("/"));
-                array[i] = "/";
+                input += "/";
                 i++;
             }
         });
@@ -165,6 +165,16 @@ public class Calcolatrice {
             @Override
             public void actionPerformed(ActionEvent e) {
                 RPN = !RPN;
+            }
+        });
+        equal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(RPN == false){
+                    scriviRPN(input);
+                }
+                else
+                    CalcolaRPN(input);
             }
         });
     }
@@ -200,9 +210,10 @@ public class Calcolatrice {
         for (int i = 0; i < codaOp.size(); i++){
             RPNOutput += codaOp.remove();
         }
+        CalcolaRPN(RPNOutput);
     }
 
-    public float CalcolaRPN(String RPNInput){
+    public void CalcolaRPN(String RPNInput){
         //stack int
         Float op[] = new Float[2];
         float newPush=0;
@@ -223,14 +234,14 @@ public class Calcolatrice {
                 stack.push(newPush);
             }
         }
-        return stack.pop();
+        label.setText(stack.pop().toString());
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Calcolatrice");
         frame.setContentPane(new Calcolatrice().panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1800, 2800);
+        frame.setSize(800, 1000);
         frame.setVisible(true);
     }
 }
