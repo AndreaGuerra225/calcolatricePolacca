@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
 
-public class calcolatrice {
+public class Calcolatrice {
     private JPanel panel;
     private JLabel display;
     private JButton button1;
@@ -32,7 +32,7 @@ public class calcolatrice {
 
     private StringBuilder currentEspressione = new StringBuilder();
 
-    public calcolatrice() {
+    public Calcolatrice() {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -252,9 +252,9 @@ public class calcolatrice {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Calcolatrice");
+        JFrame frame = new JFrame("calcolatrice");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new calcolatrice().panel);
+        frame.getContentPane().add(new Calcolatrice().panel);
         frame.pack();
         frame.setVisible(true);
     }
@@ -374,6 +374,8 @@ public class calcolatrice {
                 throw new IllegalArgumentException("Operatore non valido: " + operatore);
         }
     }
+
+
 
 
 
