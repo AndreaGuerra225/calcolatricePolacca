@@ -1,12 +1,14 @@
 package calcolatrice;
 
+import database.DB;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Stack;
 
-public class Calcolatrice {
-    private JPanel panel;
+public class calcolatrice {
+    JPanel panelCalc;
     private JLabel display;
     private JButton button1;
     private JButton button2;
@@ -29,10 +31,10 @@ public class Calcolatrice {
     private JButton chiudiParentesi;
     private JRadioButton RPNRadioButton;
     private JRadioButton infissaRadioButton;
-
+    private DB db;
     private StringBuilder currentEspressione = new StringBuilder();
 
-    public Calcolatrice() {
+    public calcolatrice() {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -212,6 +214,8 @@ public class Calcolatrice {
         uguale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String espressione, risultato;
+                espressione = display.getText();
                 String espressioneCorrente = currentEspressione.toString();
                 if (infissaRadioButton.isSelected()) {
                     String espressioneRPN = traduciRPN(espressioneCorrente);
@@ -231,7 +235,8 @@ public class Calcolatrice {
                         display.setText("Errore nell'espressione");
                     }
                 }
-
+                risultato = display.getText();
+                db.CronologiaIN(espressione, risultato);
 
             }
         });
@@ -252,12 +257,13 @@ public class Calcolatrice {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("calcolatrice");
+        JFrame frame = new JFrame("Calcolatrice");
+        frame.setContentPane(new calcolatrice().panelCalc);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new Calcolatrice().panel);
         frame.pack();
         frame.setVisible(true);
     }
+
 
     private float calcolaRPN(String rpn) {
         Stack<Float> stack = new Stack<>();
@@ -374,7 +380,6 @@ public class Calcolatrice {
                 throw new IllegalArgumentException("Operatore non valido: " + operatore);
         }
     }
-
 
 
 
