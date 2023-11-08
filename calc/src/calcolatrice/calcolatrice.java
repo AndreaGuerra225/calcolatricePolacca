@@ -31,10 +31,14 @@ public class calcolatrice {
     private JButton chiudiParentesi;
     private JRadioButton RPNRadioButton;
     private JRadioButton infissaRadioButton;
-    private DB db;
+    private JLabel label;
+    private JButton crono;
+    private DB db = new DB();
     private StringBuilder currentEspressione = new StringBuilder();
 
-    public calcolatrice() {
+    
+    public calcolatrice(String username) {
+        label.setText("User: " + username);
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -236,7 +240,7 @@ public class calcolatrice {
                     }
                 }
                 risultato = display.getText();
-                db.CronologiaIN(espressione, risultato);
+                db.CronologiaIN(espressione, risultato, username);
 
             }
         });
@@ -254,11 +258,18 @@ public class calcolatrice {
                     infissaRadioButton.setSelected(false);
             }
         });
+        crono.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(panelCalc, db.stampa(username));
+            }
+        });
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Calcolatrice");
-        frame.setContentPane(new calcolatrice().panelCalc);
+        String username = null;
+        frame.setContentPane(new calcolatrice(username).panelCalc);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

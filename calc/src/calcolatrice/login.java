@@ -25,10 +25,11 @@ public class login {
                 db = new DB();
                 if(db.login(username, password) == 1){
                     frameCalc = new JFrame("Calcolatrice");
-                    frameCalc.setContentPane(new calcolatrice().panelCalc);
+                    frameCalc.setContentPane(new calcolatrice(username).panelCalc);
                     frameCalc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frameCalc.setSize(800, 500);
+                    frameCalc.setSize(800, 500 );
                     frameCalc.setVisible(true);
+
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Login fallito");
@@ -44,6 +45,7 @@ public class login {
         frame.setContentPane(new login().panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(800, 600);
         frame.setVisible(true);
     }
 }
