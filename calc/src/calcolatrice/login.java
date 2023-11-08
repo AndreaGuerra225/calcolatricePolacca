@@ -12,7 +12,8 @@ public class login {
     private JPanel panel;
     private JTextField textField1;
     private JButton LOGINButton;
-    private DB db;
+    private JButton register;
+    private DB db = new DB();
 
 
     public login() {
@@ -22,7 +23,6 @@ public class login {
                 String username = textField1.getText();
                 String password = new String(passwordField1.getPassword());
                 JFrame frameCalc;
-                db = new DB();
                 if(db.login(username, password) == 1){
                     frameCalc = new JFrame("Calcolatrice");
                     frameCalc.setContentPane(new calcolatrice(username).panelCalc);
@@ -36,6 +36,14 @@ public class login {
                     textField1.setText("");
                     passwordField1.setText("");
                 }
+            }
+        });
+        register.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String password = new String(passwordField1.getPassword());
+                String utente = new String(textField1.getText());
+                db.Register(utente, password);
             }
         });
     }

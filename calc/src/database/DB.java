@@ -94,4 +94,27 @@ public class DB {
 
         return 1;
     }
+
+    public int Register(String utente, String password) {
+        if(password.isEmpty()){
+            return -1;
+        }
+
+        Connection conn = connect();
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "INSERT INTO utenti(username, password) VALUES" + "(?, ?)";
+
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, utente);
+            preparedStatement.setString(2, password);
+            preparedStatement.executeUpdate();
+            statement.close();
+            conn.close();
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return 1;
+    }
 }
